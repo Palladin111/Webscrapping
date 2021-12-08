@@ -11,7 +11,7 @@ text = response.text
 soup = BeautifulSoup(text, features="html.parser")
 articles = soup.find_all('article')
 
-title_1 = ""
+title_1 = []
 for article in articles:
     for hub in MY_HUBS:
         pattern_hub = re.compile("({})".format(hub))
@@ -21,6 +21,6 @@ for article in articles:
             title = article.find('h2')
             link = title.find('a').attrs.get('href')
             url = "https://habr.com" + link
-            if title.text != title_1:
+            if title.text not in title_1:
                 print(f'{date[0:10]} - {title.text} - {url}')
-                title_1 = title.text
+                title_1.append(title.text)
